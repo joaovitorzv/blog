@@ -24,10 +24,9 @@ jobs:
         with:
           node-version: '12'
       - run: npm install
-      - run: npm run build
+      - run: npm run build && touch ./out/.nojekyll
         env:
             CI: false
-      - run: ls
 
       - name: Deploy 🚀
         if: github.ref == 'refs/heads/main'
