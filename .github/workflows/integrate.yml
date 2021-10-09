@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '14.x'
       - run: npm install
-      - run: npm run build && touch ./build/.nojekyll
+      - run: npm run build && touch ./out/.nojekyll
         env:
             CI: false
 
@@ -33,5 +33,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages  # The branch the action should deploy to.
-          FOLDER: build       # The folder the action should deploy.
+          FOLDER: out      # The folder the action should deploy.
           CLEAN: true       # Automatically remove deleted files from the deploy branch
