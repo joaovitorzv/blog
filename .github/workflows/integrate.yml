@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '12'
       - run: npm install
-      - run: npm run build && mkdir ./out && touch ./out/.nojekyll
+      - run: mkdir ./out && touch ./out/.nojekyll && cd ./out && npm run build
         env:
             CI: false
 
