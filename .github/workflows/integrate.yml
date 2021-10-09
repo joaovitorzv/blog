@@ -29,7 +29,6 @@ jobs:
             CI: false 
 
       - name: Deploy 
-        if: github.ref == 'ref/heads/main'
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
