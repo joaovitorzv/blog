@@ -1,0 +1,24 @@
+.postHeader {
+}
+
+.postHeader > h2 {
+  margin-bottom: 0;
+  font-family: var(--font-mono); 
+  font-size: 32px;
+}
+
+.postCover {
+  width: 100%;
+  
+  margin-top: 1.5rem;
+  border-bottom: 4px solid var(--theme-accent)
+}
+
+.footer {
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.footer > span {
+  font-size: 16px;
+}
