@@ -22,14 +22,13 @@ jobs:
       - name: Install and Build 🔧
         uses: actions/setup-node@v1
         with:
-          node-version: '12'
+          node-version: '14.x'
       - run: npm install
-      - run: mkdir ./out && touch ./out/.nojekyll && cd ./out && npm run build
+      - run: npm run build && touch ./out/.nojekyll
         env:
             CI: false
 
       - name: Deploy 🚀
-        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
