@@ -28,9 +28,11 @@ jobs:
         env:
             CI: false
 
+      - name: show loiros
+      - run: ls
+
       - name: Deploy 🚀
         if: github.ref == 'refs/heads/main'
-        run: ls
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
