@@ -27,8 +27,6 @@ jobs:
       - run: npm run build
         env:
             CI: false
-
-      - name: show loiros
       - run: ls
 
       - name: Deploy 🚀
