@@ -7,11 +7,11 @@ import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlight } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
-import Header from "../../../components/header"
+import Header from "../../components/header"
 import PostStyles from './Post.module.css'
-import MarkdownStyles from '../../../styles/Markdown.module.css'
+import MarkdownStyles from '../../styles/Markdown.module.css'
 
-import CoverImage from '../../../public/assets/peak.jpg'
+import CoverImage from '../../public/assets/peak.jpg'
 
 const Post: NextPage = () => {
   const router = useRouter()
