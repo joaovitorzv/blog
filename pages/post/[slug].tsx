@@ -1,7 +1,8 @@
-import { NextPage } from "next"
+import { NextPage, GetServerSideProps } from "next"
 import { useRouter } from "next/router"
 import Image from 'next/image'
 import Head from "next/head"
+import Link from "next/link"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlight } from 'react-syntax-highlighter'
@@ -13,10 +14,31 @@ import MarkdownStyles from '../../styles/Markdown.module.css'
 
 import CoverImage from '../../public/assets/peak.jpg'
 
-const Post: NextPage = () => {
+import { gql } from '@apollo/client'
+import client from '../api/client'
+
+import { formatDate } from '../../utils'
+
+type Post = {
+  title: string,
+  date: string,
+  coverImage: {
+    url: string,
+    width: number,
+    height: number 
+  },
+  content: {
+    markdown: string 
+  }
+}
+type Props = {
+  post: Post
+}
+
+const Post: NextPage<Props> = ({ post }) => {
   const router = useRouter()
-  const { id } = router.query
   
+  console.log(post)
   // TODO get post data by it's id
   const postData = {
     title: 'Post title being processed lets imagine that here is a very big title tho',
@@ -25,25 +47,31 @@ const Post: NextPage = () => {
   }
 
   const markdown = `Ai vai um teste de maluco 
-  ~~~js
-console.log('It works!')
+  ~~~bash
+npm run dev
 ~~~
 ` 
 
   return (
     <>
       <Head>
-        <title>{postData.title}</title>
+        <title>{post.title}</title>
         {/* TODO Improve post SEO */}
       </Head>
       <main className='container'>
         <Header />
         <section className={PostStyles.postHeader}>
           <div className={PostStyles.postCover}>
-            <Image src={postData.image} layout='responsive' alt='peak of ice mountain' />   
+            <Image 
+              src={post.coverImage.url} 
+              width={post.coverImage.width} 
+              height={post.coverImage.height}
+              layout='responsive' 
+              alt='peak of ice mountain' 
+            />   
           </div>
-          <h2>{postData.title}</h2>
-          <span>{postData.date}</span>
+          <h2>{post.title}</h2>
+          <span>{formatDate(post.date)}</span>
         </section>
         <article>
           <ReactMarkdown
@@ -69,15 +97,53 @@ console.log('It works!')
               }
             }} 
           >
-            {markdown}
+            {post.content.markdown}
           </ReactMarkdown>
         </article>
+        <div>
+          <Link href='/'>Back to home</Link>
+        </div>
       </main>
       <footer className={PostStyles.footer}>
         <span>Wrote by @joaovitorzv thank you for reading!</span>
       </footer>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+
+  const { data } = await client.query({
+    query: gql`
+      query BlogPost {
+        post(where: {slug: "${context.query.slug}"}) {
+          title,
+          date,
+          coverImage {
+            url,
+            width,
+            height
+          },
+          content {
+            markdown
+          }
+        }
+      }
+    `
+  })
+
+  if (data) {
+    return {
+      props: data
+    } 
+  }
+
+  return {
+    redirect: {
+      destination: '/',
+      permanent: true 
+    }
+  }
 }
 
 export default Post
