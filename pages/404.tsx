@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Header from '../components/header'
 
-import  '../styles/404.css'
+import NotFoundStyles from '../styles/404.module.css'
 
 function Custom404() {
   return (
@@ -10,7 +10,7 @@ function Custom404() {
         <title>@joaovitorzv • 404 Not Found</title>
       </Head>
       <Header />
-      <main className='content'>
+      <main className={NotFoundStyles.content}>
         <h2>404</h2>
         <p>Sorry, page not found!</p>
       </main>
