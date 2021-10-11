@@ -15,7 +15,7 @@ import MarkdownStyles from '../../styles/Markdown.module.css'
 import CoverImage from '../../public/assets/peak.jpg'
 
 import { gql } from '@apollo/client'
-import client from '../api/client'
+import client from '../../graphql-client'
 
 import { formatDate } from '../../utils'
 
@@ -36,22 +36,6 @@ type Props = {
 }
 
 const Post: NextPage<Props> = ({ post }) => {
-  const router = useRouter()
-  
-  console.log(post)
-  // TODO get post data by it's id
-  const postData = {
-    title: 'Post title being processed lets imagine that here is a very big title tho',
-    date: '17 September 2021',
-    image: CoverImage 
-  }
-
-  const markdown = `Ai vai um teste de maluco 
-  ~~~bash
-npm run dev
-~~~
-` 
-
   return (
     <>
       <Head>
@@ -113,7 +97,7 @@ npm run dev
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 
-  const { data } = await client.query({
+  const result = await client.query({
     query: gql`
       query BlogPost {
         post(where: {slug: "${context.query.slug}"}) {
@@ -132,17 +116,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     `
   })
 
-  if (data) {
+  const data = await result.data
+
+  if (!data.post) {
     return {
-      props: data
-    } 
+      redirect: {
+        destination: '/',
+        permanent: false 
+      }
+    }
   }
 
   return {
-    redirect: {
-      destination: '/',
-      permanent: true 
-    }
+    props: data
   }
 }
 

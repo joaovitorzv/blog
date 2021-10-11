@@ -7,7 +7,7 @@ import styles from '../styles/Blog.module.css'
 import { formatDate } from '../utils'
 
 import { gql } from '@apollo/client'
-import client from './api/client'
+import client from '../graphql-client'
 
 type Post = {
   id: string,
