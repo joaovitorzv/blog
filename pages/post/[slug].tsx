@@ -1,8 +1,9 @@
-import { NextPage, GetServerSideProps } from "next"
-import { useRouter } from "next/router"
+import { NextPage, GetStaticProps, GetStaticPaths } from "next"
 import Image from 'next/image'
 import Head from "next/head"
 import Link from "next/link"
+import { ParsedUrlQuery } from 'querystring'
+
 import ReactMarkdown from "react-markdown"
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlight } from 'react-syntax-highlighter'
@@ -11,8 +12,6 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import Header from "../../components/header"
 import PostStyles from './Post.module.css'
 import MarkdownStyles from '../../styles/Markdown.module.css'
-
-import CoverImage from '../../public/assets/peak.jpg'
 
 import { gql } from '@apollo/client'
 import client from '../../graphql-client'
@@ -95,12 +94,37 @@ const Post: NextPage<Props> = ({ post }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+interface IParams extends ParsedUrlQuery {
+  slug: string;
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const result = await client.query({
+    query: gql`
+      query BlogPosts {
+        posts {
+          slug
+        }
+      }
+    `
+  });
+
+  const { posts } = await result.data 
+  
+  const paths = posts.map((post: { slug: string }) => ({
+    params: { slug: post.slug },
+  }))
+  
+  return { paths, fallback: false }
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { slug } = context.params as IParams
 
   const result = await client.query({
     query: gql`
-      query BlogPost {
-        post(where: {slug: "${context.query.slug}"}) {
+      query Post {
+        post(where: {slug: "${slug}"}) {
           title,
           date,
           coverImage {
