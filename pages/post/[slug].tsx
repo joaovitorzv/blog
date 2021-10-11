@@ -121,7 +121,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as IParams
 
-  const result = await client.query({
+  const { data } = await client.query({
     query: gql`
       query Post {
         post(where: {slug: "${slug}"}) {
@@ -139,17 +139,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       }
     `
   })
-
-  const data = await result.data
-
-  if (!data.post) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false 
-      }
-    }
-  }
 
   return {
     props: data
