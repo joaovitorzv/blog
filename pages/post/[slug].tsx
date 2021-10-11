@@ -17,6 +17,7 @@ import { gql } from '@apollo/client'
 import client from '../../graphql-client'
 
 import { formatDate } from '../../utils'
+import MyLoader from '../../utils/image-loader'
 
 type Post = {
   title: string,
@@ -46,6 +47,7 @@ const Post: NextPage<Props> = ({ post }) => {
         <section className={PostStyles.postHeader}>
           <div className={PostStyles.postCover}>
             <Image 
+              loader={MyLoader}
               src={post.coverImage.url} 
               width={post.coverImage.width} 
               height={post.coverImage.height}
