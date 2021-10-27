@@ -1,11 +1,11 @@
-import Head from 'next/head'
-import Header from '../components/header'
+import Head from "next/head";
+import Header from "../components/header";
 
-import NotFoundStyles from '../styles/404.module.css'
+import NotFoundStyles from "../styles/404.module.css";
 
 function Custom404() {
   return (
-    <div className='container'>
+    <div className="container">
       <Head>
         <title>@joaovitorzv • 404 Not Found</title>
       </Head>
@@ -15,7 +15,7 @@ function Custom404() {
         <p>Sorry, page not found!</p>
       </main>
     </div>
-  ) 
+  );
 }
 
-export default Custom404; 
+export default Custom404;
