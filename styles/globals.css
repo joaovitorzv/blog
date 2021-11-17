@@ -124,8 +124,7 @@ span {
 
 .img {
 	display: flex;
-	margin: 0 auto;
-	border-radius: 3px;
+	justify-content: center;
 }
 
 

@@ -11,7 +11,7 @@
   width: 100%;
   
   margin-top: 1.5rem;
-  border-bottom: 4px solid var(--theme-accent)
+  border-bottom: 4px dashed var(--theme-accent)
 }
 
 .footer {

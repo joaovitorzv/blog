@@ -9,6 +9,10 @@
   font-weight: 400;
 }
 
+.header > nav {
+	height: 16px;
+}
+
 .hideLinksBtn {
   font-size: 1.8rem;
   font-family: var(--font-sans);

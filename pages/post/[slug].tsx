@@ -81,7 +81,21 @@ const Post: NextPage<Props> = ({ post }) => {
 						renderers={{
 							bold: ({ children }) => <b className='bold'>{children}</b>,
 							li: ({ children }) => <li className='bulletList'>{children}</li>,
-							img: ({ src, width, height }) => <img src={src} width={width} height={height} className='img' />,
+							img: ({ src, width, height }) => {
+								console.log(src)
+								return (
+									<div className='img'>
+										<Image
+											src={src as string}
+											loader={MyLoader}
+											height={height}
+											width={width}
+											layout='intrinsic'
+											className='img'
+										/>
+									</div>
+								)
+							},
 							code: ({ children }) => <code className='inlineHighlight'>{children}</code>,
 							code_block: ({ children }) => {
 								const codeblock = children as CodeBlock
