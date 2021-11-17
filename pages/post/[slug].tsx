@@ -21,18 +21,23 @@ import { formatDate } from '../../utils'
 import MyLoader from '../../utils/image-loader'
 
 import { ReactNode, useEffect } from "react"
+import { NextSeo } from "next-seo"
 
 type Post = {
-  title: string,
-  date: string,
+  title: string;
+	slug: string;
+	description: string;
+  date: string;
   coverImage: {
-    url: string,
-    width: number,
-    height: number 
+    url: string;
+    width: number;
+    height: number; 
   },
+	coverImageAlt: string;
   content: {
-    raw: [] 
-  }
+    raw: [];
+  },
+	tags: string[];
 }
 
 type Props = {
@@ -58,6 +63,32 @@ const Post: NextPage<Props> = ({ post }) => {
       <Head>
         <title>{post.title}</title>
         {/* TODO Improve post SEO */}
+				<NextSeo 
+					openGraph={{
+						title: post.title,
+						description: post.description,
+						url: `https://joaovitorzv.github.io/post/${post.slug}`,
+						type: 'article',
+						article: {
+							publishedTime: `${post.date}T03:00:00.000Z`,
+							modifiedTime: `${post.date}T3:00:00.000Z`,
+							expirationTime: '2030-12-21T22:04:11Z',
+							section: 'Technology',
+							authors: [
+								'https://github.com/joaovitorzv'
+							],
+							tags: post.tags,
+						},
+						 images: [
+							{
+								url: post.coverImage.url,
+								width: post.coverImage.width,
+								height: post.coverImage.height,
+								alt: post.coverImageAlt,
+							},
+						],
+					}}
+				/>
       </Head>
       <main className='container'>
         <Header />
@@ -91,7 +122,6 @@ const Post: NextPage<Props> = ({ post }) => {
 											height={height}
 											width={width}
 											layout='intrinsic'
-											className='img'
 										/>
 									</div>
 								)
@@ -153,6 +183,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
       query Post {
         post(where: {slug: "${slug}"}) {
           title,
+					slug,
+					description,
           date,
           coverImage {
             url,
@@ -162,7 +194,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 					coverImageAlt,
           content {
 						raw	
-          }
+          },
+					tags
         }
       }
     `
