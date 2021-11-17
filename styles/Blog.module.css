@@ -15,6 +15,7 @@
   color: var(--theme-text);
   font-family: var(--font-mono);
   font-weight: bold;
+	text-decoration: none;
 }
 
 .post > a:hover {

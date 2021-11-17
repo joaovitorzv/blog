@@ -14,10 +14,11 @@
   font-family: var(--font-sans);
   font-weight: 800;
   color: var(--theme-accent);
+	text-decoration: underline;
 }
 
 .hideLinksBtn:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .externalLink {

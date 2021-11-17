@@ -22,3 +22,13 @@
 .footer > span {
   font-size: 16px;
 }
+
+.content {
+	font-size: 18px;
+}
+
+.postFooter {
+	padding-top: 20px;
+	border-top: 1px dashed var(--theme-accent);
+
+}	

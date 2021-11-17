@@ -4,20 +4,21 @@ import Head from "next/head"
 import Link from "next/link"
 import { ParsedUrlQuery } from 'querystring'
 
-import ReactMarkdown from "react-markdown"
-import remarkGfm from 'remark-gfm'
-import { Prism as SyntaxHighlight } from 'react-syntax-highlighter'
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
-
 import Header from "../../components/header"
 import PostStyles from './Post.module.css'
-import MarkdownStyles from '../../styles/Markdown.module.css'
+
+import Prism from 'prismjs'
+import 'prismjs/themes/prism.css'
+
+import { RichText } from '@graphcms/rich-text-react-renderer'
 
 import { gql } from '@apollo/client'
 import client from '../../graphql-client'
 
 import { formatDate } from '../../utils'
 import MyLoader from '../../utils/image-loader'
+
+import { useEffect } from "react"
 
 type Post = {
   title: string,
@@ -28,15 +29,21 @@ type Post = {
     height: number 
   },
   content: {
-    markdown: string 
+    raw: [] 
   }
 }
+
 type Props = {
   post: Post
 }
 
 const Post: NextPage<Props> = ({ post }) => {
-  return (
+
+	useEffect(() => {
+		Prism.highlightAll()
+	}, [])
+
+	return (
     <>
       <Head>
         <title>{post.title}</title>
@@ -58,39 +65,24 @@ const Post: NextPage<Props> = ({ post }) => {
           <h2>{post.title}</h2>
           <span>{formatDate(post.date)}</span>
         </section>
-        <article>
-          <ReactMarkdown
-            className={MarkdownStyles.markdown}
-            remarkPlugins={[remarkGfm]}
-            components={{
-              code({node, inline, className, children, ...props}) {
-                const match = /language-(\w+)/.exec(className || '')
-                return !inline && match ? (
-                  <SyntaxHighlight
-                    style={vscDarkPlus}
-                    language={match[1]}
-                    PreTag="div"
-                    className={MarkdownStyles.syntax}
-                  >
-                    {children}
-                  </SyntaxHighlight>
-                ) : (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                )
-              }
-            }} 
-          >
-            {post.content.markdown}
-          </ReactMarkdown>
+        <article className={PostStyles.content}>
+					<RichText 
+						content={post.content.raw} 
+						renderers={{
+							bold: ({ children }) => <b className='bold'>{children}</b>,
+							li: ({ children }) => <li className='bulletList'>{children}</li>,
+							img: ({ src, width, height }) => <img src={src} width={width} height={height} className='img' />,
+							code: ({ children }) => <code className='inlineHighlight'>{children}</code>,
+							code_block: ({ children }) => <pre className='blockHighlight language-none'><code>{children}</code></pre>
+						}}
+					/>
         </article>
-        <div>
-          <Link href='/'>Back to home</Link>
+        <div className={PostStyles.postFooter}>
+          <Link href='/'>Voltar</Link>
         </div>
       </main>
       <footer className={PostStyles.footer}>
-        <span>Wrote by @joaovitorzv thank you for reading!</span>
+        <span>Escrito por @joaovitorzv obrigado por ler!</span>
       </footer>
     </>
   )
@@ -134,8 +126,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
             width,
             height
           },
+					coverImageAlt,
           content {
-            markdown
+						raw	
           }
         }
       }

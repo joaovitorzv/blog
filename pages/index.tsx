@@ -42,7 +42,7 @@ const Home: NextPage<Props> = ({ posts }) => {
       </main>
 
       <footer className={styles.footer}>
-        <p>Copyright &copy; {"\"new Date().getFullYear()\""} João Vitor Veras </p>
+        <p>Copyright &copy; new Date().getFullYear() João Vitor Veras </p>
       </footer>
     </div>
   )
