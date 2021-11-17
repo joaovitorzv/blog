@@ -9,6 +9,8 @@ import PostStyles from './Post.module.css'
 
 import Prism from 'prismjs'
 import 'prismjs/themes/prism.css'
+import 'prismjs/components/prism-python'
+import 'prismjs/components/prism-jsx'
 
 import { RichText } from '@graphcms/rich-text-react-renderer'
 
@@ -18,7 +20,7 @@ import client from '../../graphql-client'
 import { formatDate } from '../../utils'
 import MyLoader from '../../utils/image-loader'
 
-import { useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 
 type Post = {
   title: string,
@@ -35,6 +37,14 @@ type Post = {
 
 type Props = {
   post: Post
+}
+
+type CodeBlock = {
+	props: {
+		content: [
+			{ text: string }
+		]
+	}
 }
 
 const Post: NextPage<Props> = ({ post }) => {
@@ -73,7 +83,16 @@ const Post: NextPage<Props> = ({ post }) => {
 							li: ({ children }) => <li className='bulletList'>{children}</li>,
 							img: ({ src, width, height }) => <img src={src} width={width} height={height} className='img' />,
 							code: ({ children }) => <code className='inlineHighlight'>{children}</code>,
-							code_block: ({ children }) => <pre className='blockHighlight language-none'><code>{children}</code></pre>
+							code_block: ({ children }) => {
+								const codeblock = children as CodeBlock
+
+								const lang = /(?<=\$)(.*?)(?=\$)/.exec(codeblock.props.content[0].text || '')
+								const codeblockWithoutLangIdentifier = codeblock.props.content[0].text.replace(/\$.*?\$\n/, '')
+								
+								return (
+									<pre className={`blockHighlight language-${lang ? lang?.[1] : 'none'}`}><code>{codeblockWithoutLangIdentifier}</code></pre>
+								)
+							}
 						}}
 					/>
         </article>
