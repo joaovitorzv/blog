@@ -36,7 +36,7 @@ const Home: NextPage<Props> = ({ posts }) => {
             </Link> 
             <span>{formatDate(post.date)}</span>
             <p>{post.description}</p>
-            <Link href={`/post/${post.slug}`}>continue reading</Link>
+            <Link href={`/post/${post.slug}#keep-reading`}>continuar lendo...</Link>
           </section>
         ))}
       </main>

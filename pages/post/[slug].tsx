@@ -65,7 +65,7 @@ const Post: NextPage<Props> = ({ post }) => {
           <h2>{post.title}</h2>
           <span>{formatDate(post.date)}</span>
         </section>
-        <article className={PostStyles.content}>
+        <article id='keep-reading' className={PostStyles.content}>
 					<RichText 
 						content={post.content.raw} 
 						renderers={{

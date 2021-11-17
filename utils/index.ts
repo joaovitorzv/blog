@@ -10,6 +10,8 @@ export function titleToUrl(title: string) {
 }
 
 export function formatDate(date: string) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' } 
-  return new Date(date).toLocaleDateString('en-US', { year: 'numeric', day: 'numeric', month: 'long' })
+  const options =  { year: 'numeric', day: '2-digit', month: 'long' }
+	const formated = new Date(date + 'T03:00:00.000Z').toLocaleDateString('pt-BR', options as Intl.DateTimeFormatOptions)
+
+  return formated 
 }
