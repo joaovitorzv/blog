@@ -32,6 +32,7 @@ type Post = {
     url: string;
     width: number;
     height: number; 
+		handle: string;
   },
 	coverImageAlt: string;
   content: {
@@ -58,6 +59,9 @@ const Post: NextPage<Props> = ({ post }) => {
 		Prism.highlightAll()
 	}, [])
 
+
+	console.log(post.coverImage.width)
+
 	return (
     <>	
       <Head>
@@ -81,9 +85,9 @@ const Post: NextPage<Props> = ({ post }) => {
 					},
 					 images: [
 						{
-							url: post.coverImage.url,
-							width: post.coverImage.width,
-							height: post.coverImage.height,
+							url: 'https://media.graphcms.com/resize=width:1920/' + post.coverImage.handle,
+							width: 1920,
+							height: 1080,
 							alt: post.coverImageAlt,
 						},
 					],
@@ -188,7 +192,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
           coverImage {
             url,
             width,
-            height
+            height,
+						handle
           },
 					coverImageAlt,
           content {
