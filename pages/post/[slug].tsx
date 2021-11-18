@@ -59,13 +59,11 @@ const Post: NextPage<Props> = ({ post }) => {
 		Prism.highlightAll()
 	}, [])
 
-
-	console.log(post.coverImage.width)
-
 	return (
     <>	
       <Head>
         <title>{post.title}</title>
+				<meta name="author" content="https://github.com/joaovitorzv" />
       </Head>
 			<NextSeo 
 				openGraph={{
@@ -74,9 +72,9 @@ const Post: NextPage<Props> = ({ post }) => {
 					url: `https://joaovitorzv.github.io/post/${post.slug}`,
 					type: 'article',
 					article: {
-						publishedTime: `${post.date}T03:00:00.000Z`,
-						modifiedTime: `${post.date}T3:00:00.000Z`,
-						expirationTime: '2030-12-21T22:04:11Z',
+						publishedTime: `${post.date}T03:00:00Z`,
+						modifiedTime: `${post.date}T03:00:00Z`,
+						expirationTime: '2030-12-21T03:00:00Z',
 						section: 'Technology',
 						authors: [
 							'https://github.com/joaovitorzv'
@@ -116,7 +114,6 @@ const Post: NextPage<Props> = ({ post }) => {
 							bold: ({ children }) => <b className='bold'>{children}</b>,
 							li: ({ children }) => <li className='bulletList'>{children}</li>,
 							img: ({ src, width, height }) => {
-								console.log(src)
 								return (
 									<div className='img'>
 										<Image
