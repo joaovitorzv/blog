@@ -59,37 +59,36 @@ const Post: NextPage<Props> = ({ post }) => {
 	}, [])
 
 	return (
-    <>
+    <>	
       <Head>
         <title>{post.title}</title>
-        {/* TODO Improve post SEO */}
-				<NextSeo 
-					openGraph={{
-						title: post.title,
-						description: post.description,
-						url: `https://joaovitorzv.github.io/post/${post.slug}`,
-						type: 'article',
-						article: {
-							publishedTime: `${post.date}T03:00:00.000Z`,
-							modifiedTime: `${post.date}T3:00:00.000Z`,
-							expirationTime: '2030-12-21T22:04:11Z',
-							section: 'Technology',
-							authors: [
-								'https://github.com/joaovitorzv'
-							],
-							tags: post.tags,
-						},
-						 images: [
-							{
-								url: post.coverImage.url,
-								width: post.coverImage.width,
-								height: post.coverImage.height,
-								alt: post.coverImageAlt,
-							},
-						],
-					}}
-				/>
       </Head>
+			<NextSeo 
+				openGraph={{
+					title: post.title,
+					description: post.description,
+					url: `https://joaovitorzv.github.io/post/${post.slug}`,
+					type: 'article',
+					article: {
+						publishedTime: `${post.date}T03:00:00.000Z`,
+						modifiedTime: `${post.date}T3:00:00.000Z`,
+						expirationTime: '2030-12-21T22:04:11Z',
+						section: 'Technology',
+						authors: [
+							'https://github.com/joaovitorzv'
+						],
+						tags: post.tags,
+					},
+					 images: [
+						{
+							url: post.coverImage.url,
+							width: post.coverImage.width,
+							height: post.coverImage.height,
+							alt: post.coverImageAlt,
+						},
+					],
+				}}
+			/>
       <main className='container'>
         <Header />
         <section className={PostStyles.postHeader}>
