@@ -4,9 +4,25 @@ import Image from 'next/image'
 
 import { useToggle } from '../../utils/useToggle'
 import styles from './Header.module.css'
+import { useEffect, useState } from 'react'
 
 const Header: NextComponentType = (props) => {
   const [socialHidden, setSocialHidden] = useToggle()
+	const [pinned, setPinned] = useState(false)	
+	const [navOffsetTop, setNavOffsetTop] = useState(66)
+
+	useEffect(() => {
+		const handlePin = () => {
+			const nav = document.getElementById('navigation')		
+			setNavOffsetTop(nav ? nav.offsetTop : 66)
+	
+			if (window.pageYOffset >= navOffsetTop) return setPinned(true)
+			if (window.pageYOffset <= navOffsetTop) return setPinned(false)
+		}
+
+		document.addEventListener('scroll', handlePin)
+		return () => document.removeEventListener('scroll', handlePin)	
+	}, [])
 
   return (
     <header className={styles.header}>
@@ -20,7 +36,7 @@ const Header: NextComponentType = (props) => {
         </button>
         {' '}place on internet.
       </h1>
-      <nav>
+      <nav id='navigation' className={pinned ? styles.pinnedNav : ''}>
         <Link href='/'><a>Home</a></Link>
         <div className={socialHidden ? styles.externalLink : styles.hiddenLink}>
           <a
