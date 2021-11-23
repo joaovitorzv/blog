@@ -7,7 +7,7 @@ module.exports = {
   },
   async rewrites() {
     return {
-      beforeFiles: [
+      fallback: [
         {
           source: '/post/:slug',
           destination: '/a/:slug',
