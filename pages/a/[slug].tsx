@@ -1,27 +1,25 @@
-import { NextPage, GetStaticProps, GetStaticPaths } from "next";
-import Image from "next/image";
-import Head from "next/head";
-import Link from "next/link";
-import { ParsedUrlQuery } from "querystring";
+import { useEffect } from 'react';
+import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import Image from 'next/image';
+import Head from 'next/head';
+import Link from 'next/link';
+import { ParsedUrlQuery } from 'querystring';
+import { gql } from '@apollo/client';
+import Prism from 'prismjs';
 
-import Header from "../../components/header";
-import PostStyles from "./Post.module.css";
+import { NextSeo } from 'next-seo';
+import 'prismjs/themes/prism.css';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-jsx';
 
-import Prism from "prismjs";
-import "prismjs/themes/prism.css";
-import "prismjs/components/prism-python";
-import "prismjs/components/prism-jsx";
+import { RichText } from '@graphcms/rich-text-react-renderer';
 
-import { RichText } from "@graphcms/rich-text-react-renderer";
-
-import { gql } from "@apollo/client";
-import client from "../../graphql-client";
+import Header from '../../components/header';
+import PostStyles from './Post.module.css';
+import client from '../../graphql-client';
 
 import { formatDate } from "../../utils";
 import MyLoader from "../../utils/image-loader";
-
-import { ReactNode, useEffect } from "react";
-import { NextSeo } from "next-seo";
 
 type Post = {
   title: string;
@@ -109,7 +107,7 @@ const Post: NextPage<Props> = ({ post }) => {
             content={post.content.raw}
             renderers={{
               bold: ({ children }) => <b className="bold">{children}</b>,
-              li: ({ children }) => <li className="bulletList">{children}</li>,
+              li: ({ children }) => <li className="li">{children}</li>,
               img: ({ src, width, height }) => {
                 return (
                   <div className="img">
@@ -145,6 +143,7 @@ const Post: NextPage<Props> = ({ post }) => {
                   </pre>
                 );
               },
+              blockquote: ({ children }) => <blockquote className="quote">{children}</blockquote>,
             }}
           />
         </article>
