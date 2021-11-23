@@ -31,12 +31,12 @@ const Home: NextPage<Props> = ({ posts }) => {
       <main className={styles.main}>
         {posts.map((post: Post) => (
           <section key={post.title} className={styles.post}>
-            <Link href={`/a/${post.slug}`}>
+            <Link href={`/post/${post.slug}`}>
               <a className={styles.postTitle}>{post.title}</a>
             </Link>
             <span>{formatDate(post.date)}</span>
             <p>{post.description}</p>
-            <Link href={`/a/${post.slug}#keep-reading`}>
+            <Link href={`/post/${post.slug}#keep-reading`}>
               continuar lendo...
             </Link>
           </section>
