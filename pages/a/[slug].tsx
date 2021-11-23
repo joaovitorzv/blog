@@ -16,7 +16,7 @@ import { RichText } from '@graphcms/rich-text-react-renderer';
 
 import Header from '../../components/header';
 import PostStyles from './Post.module.css';
-import client from '../../graphql-client.ts';
+import client from '../../graphql-client';
 
 import { formatDate } from "../../utils";
 import MyLoader from "../../utils/image-loader";
