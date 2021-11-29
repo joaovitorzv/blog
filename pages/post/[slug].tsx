@@ -1,22 +1,22 @@
-import { useEffect } from 'react';
-import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
-import Image from 'next/image';
-import Head from 'next/head';
-import Link from 'next/link';
-import { ParsedUrlQuery } from 'querystring';
-import { gql } from '@apollo/client';
-import Prism from 'prismjs';
+import { useEffect } from "react";
+import { NextPage, GetStaticProps, GetStaticPaths } from "next";
+import Image from "next/image";
+import Head from "next/head";
+import Link from "next/link";
+import { ParsedUrlQuery } from "querystring";
+import { gql } from "@apollo/client";
+import Prism from "prismjs";
 
-import { NextSeo } from 'next-seo';
-import 'prismjs/themes/prism.css';
-import 'prismjs/components/prism-python';
-import 'prismjs/components/prism-jsx';
+import { NextSeo } from "next-seo";
+import "prismjs/themes/prism.css";
+import "prismjs/components/prism-python";
+import "prismjs/components/prism-jsx";
 
-import { RichText } from '@graphcms/rich-text-react-renderer';
+import { RichText } from "@graphcms/rich-text-react-renderer";
 
-import Header from '../../components/header';
-import PostStyles from './Post.module.css';
-import client from '../../graphql-client';
+import Header from "../../components/header";
+import PostStyles from "./Post.module.css";
+import client from "../../graphql-client";
 
 import { formatDate } from "../../utils";
 import MyLoader from "../../utils/image-loader";
@@ -143,7 +143,9 @@ const Post: NextPage<Props> = ({ post }) => {
                   </pre>
                 );
               },
-              blockquote: ({ children }) => <blockquote className="quote">{children}</blockquote>,
+              blockquote: ({ children }) => (
+                <blockquote className="quote">{children}</blockquote>
+              ),
             }}
           />
         </article>

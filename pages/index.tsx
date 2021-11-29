@@ -1,12 +1,12 @@
-import { NextPage, GetStaticProps } from "next";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { gql } from "@apollo/client";
+
 import Header from "../components/header";
 import styles from "../styles/Blog.module.css";
 
 import { formatDate } from "../utils";
-
-import { gql } from "@apollo/client";
 import client from "../graphql-client";
 
 type Post = {
@@ -20,7 +20,7 @@ type Props = {
   posts: Post[];
 };
 
-const Home: NextPage<Props> = ({ posts }) => {
+const Home = ({ posts }: Props) => {
   return (
     <div className="container">
       <Head>
