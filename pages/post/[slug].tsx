@@ -108,11 +108,12 @@ const Post: NextPage<Props> = ({ post }) => {
             renderers={{
               bold: ({ children }) => <b className="bold">{children}</b>,
               li: ({ children }) => <li className="li">{children}</li>,
-              img: ({ src, width, height }) => {
+              img: ({ src, width, height, altText }) => {
                 return (
                   <div className="img">
                     <Image
                       src={src as string}
+                      alt={altText}
                       loader={MyLoader}
                       height={height}
                       width={width}
