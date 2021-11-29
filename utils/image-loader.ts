@@ -5,11 +5,12 @@ type ImageProps = {
 };
 
 function MyLoader({ src, width, height }: ImageProps) {
-  const url = src.split("/");
+  const extractImageId = /((?:\/[^\/\r\n]*){1})$/;
+  const id = extractImageId.exec(src);
 
   return `https://media.graphcms.com/resize=${
     height ? "height:" + height : ""
-  }width:${width}/${url[3]}`;
+  }width:${width}${id![0]}`;
 }
 
 export default MyLoader;
