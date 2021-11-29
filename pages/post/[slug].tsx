@@ -128,19 +128,21 @@ const Post: NextPage<Props> = ({ post }) => {
               code_block: ({ children }) => {
                 const codeblock = children as CodeBlock;
 
-                const lang = /(?<=\$)(.*?)(?=\$)/.exec(
+                const extractedLang = /(?<=\$)(.*?)(?=\$)/.exec(
                   codeblock.props.content[0].text || ""
                 );
+                const lang = extractedLang
+                  ? "language-" + extractedLang[0]
+                  : "none";
+
                 const codeblockWithoutLangIdentifier =
                   codeblock.props.content[0].text.replace(/\$.*?\$\n/, "");
 
                 return (
-                  <pre
-                    className={`blockHighlight language-${
-                      lang ? lang?.[1] : "none"
-                    }`}
-                  >
-                    <code>{codeblockWithoutLangIdentifier}</code>
+                  <pre className="blockHighlight">
+                    <code className={lang}>
+                      {codeblockWithoutLangIdentifier}
+                    </code>
                   </pre>
                 );
               },
