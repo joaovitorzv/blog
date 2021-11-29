@@ -10,15 +10,15 @@ const Header: NextComponentType = () => {
   const [pinned, setPinned] = useState(false);
   const [navOffsetTop, setNavOffsetTop] = useState(66);
 
+  const handlePin = () => {
+    const nav = document.getElementById("navigation");
+    setNavOffsetTop(nav ? nav.offsetTop : 66);
+
+    if (window.pageYOffset >= navOffsetTop) return setPinned(true);
+    if (window.pageYOffset <= navOffsetTop) return setPinned(false);
+  };
+
   useEffect(() => {
-    const handlePin = () => {
-      const nav = document.getElementById("navigation");
-      setNavOffsetTop(nav ? nav.offsetTop : 66);
-
-      if (window.pageYOffset >= navOffsetTop) return setPinned(true);
-      if (window.pageYOffset <= navOffsetTop) return setPinned(false);
-    };
-
     document.addEventListener("scroll", handlePin);
     return () => document.removeEventListener("scroll", handlePin);
   }, []);
