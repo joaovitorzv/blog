@@ -26,11 +26,11 @@ const Header: NextComponentType = () => {
   return (
     <header className={styles.header}>
       <h1>
-        this is{" "}
+        {"==> "}
         <button className={styles.hideLinksBtn} onClick={setSocialHidden}>
           @joaovitorzv
         </button>{" "}
-        place on internet.
+        blog.
       </h1>
       <nav id="navigation" className={pinned ? styles.pinnedNav : ""}>
         <Link href="/">

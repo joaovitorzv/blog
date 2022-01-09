@@ -139,7 +139,7 @@ const Post: NextPage<Props> = ({ post }) => {
                   codeblock.props.content[0].text.replace(/\$.*?\$\n/, "");
 
                 return (
-                  <pre className="blockHighlight">
+                  <pre className="blockHighlight" style={{ fontSize: "14px" }}>
                     <code className={lang}>
                       {codeblockWithoutLangIdentifier}
                     </code>
