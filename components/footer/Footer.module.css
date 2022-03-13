@@ -6,6 +6,11 @@
   align-items: center;
 
   color: var(--theme-text-light);
+  font-size: 14px;
+}
+
+.footer p {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .footer p span {
