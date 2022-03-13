@@ -1,0 +1,13 @@
+.footer {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--theme-text-light);
+}
+
+.footer p span {
+  color: var(--color-gray-400);
+}

@@ -11,15 +11,6 @@
   border-bottom: 4px dashed var(--theme-accent);
 }
 
-.footer {
-  padding: 1rem 0;
-  text-align: center;
-}
-
-.footer > span {
-  font-size: 16px;
-}
-
 .content {
   font-size: 18px;
 }

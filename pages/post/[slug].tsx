@@ -1,30 +1,28 @@
-import { useEffect } from "react";
-import { NextPage, GetStaticProps, GetStaticPaths } from "next";
-import Image from "next/image";
-import Head from "next/head";
-import Link from "next/link";
-import { ParsedUrlQuery } from "querystring";
 import { gql } from "@apollo/client";
-import Prism from "prismjs";
-
-import { NextSeo } from "next-seo";
-import "prismjs/themes/prism.css";
-import "prismjs/components/prism-python";
-import "prismjs/components/prism-jsx";
-
 import { RichText } from "@graphcms/rich-text-react-renderer";
-
+import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { NextSeo } from "next-seo";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import Prism from "prismjs";
+import "prismjs/components/prism-jsx";
+import "prismjs/components/prism-python";
+import "prismjs/themes/prism.css";
+import { ParsedUrlQuery } from "querystring";
+import React, { useEffect } from "react";
+import Footer from "../../components/footer";
 import Header from "../../components/header";
-import PostStyles from "./Post.module.css";
 import client from "../../graphql-client";
-
 import { formatDate } from "../../utils";
 import MyLoader from "../../utils/image-loader";
+import PostStyles from "./Post.module.css";
 
 type Post = {
   title: string;
   slug: string;
   description: string;
+  language: string;
   date: string;
   coverImage: {
     url: string;
@@ -100,7 +98,7 @@ const Post: NextPage<Props> = ({ post }) => {
             />
           </div>
           <h2>{post.title}</h2>
-          <span>{formatDate(post.date)}</span>
+          <span>{formatDate(post.date, post.language)}</span>
         </section>
         <article id="keep-reading" className={PostStyles.content}>
           <RichText
@@ -153,12 +151,10 @@ const Post: NextPage<Props> = ({ post }) => {
           />
         </article>
         <div className={PostStyles.postFooter}>
-          <Link href="/">Voltar</Link>
+          <Link href="/">{post.language === "pt-BR" ? "Voltar" : "Back"}</Link>
         </div>
       </main>
-      <footer className={PostStyles.footer}>
-        <span>Escrito por @joaovitorzv obrigado por ler!</span>
-      </footer>
+      <Footer />
     </>
   );
 };
@@ -196,6 +192,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         post(where: {slug: "${slug}"}) {
           title,
 					slug,
+          language,
 					description,
           date,
           coverImage {

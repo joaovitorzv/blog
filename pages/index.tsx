@@ -1,13 +1,14 @@
+import { gql } from "@apollo/client";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { gql } from "@apollo/client";
-
+import React, { useContext, useEffect, useState } from "react";
+import Footer from "../components/footer";
 import Header from "../components/header";
-import styles from "../styles/Blog.module.css";
-
-import { formatDate } from "../utils";
 import client from "../graphql-client";
+import styles from "../styles/Blog.module.css";
+import { formatDate } from "../utils";
+import { PostsLangFilterContext } from "../hooks/FilterContext";
 
 type Post = {
   id: string;
@@ -15,12 +16,29 @@ type Post = {
   description: string;
   date: string;
   slug: string;
+  language: string;
 };
 type Props = {
   posts: Post[];
 };
 
 const Home = ({ posts }: Props) => {
+  const { selectedLangFilter } = useContext(PostsLangFilterContext);
+  const [postsFiltered, setPostsFiltered] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const filterPosts = posts.filter((post) => {
+      if (selectedLangFilter === "all") {
+        return post;
+      }
+      if (post.language === selectedLangFilter) {
+        return post;
+      }
+    });
+
+    setPostsFiltered(filterPosts);
+  }, [selectedLangFilter, posts]);
+
   return (
     <div className="container">
       <Head>
@@ -29,23 +47,23 @@ const Home = ({ posts }: Props) => {
       </Head>
       <Header />
       <main className={styles.main}>
-        {posts.map((post: Post) => (
+        {postsFiltered.map((post: Post) => (
           <section key={post.title} className={styles.post}>
             <Link href={`/post/${post.slug}`}>
               <a className={styles.postTitle}>{post.title}</a>
             </Link>
-            <span>{formatDate(post.date)}</span>
+            <span>{formatDate(post.date, post.language)}</span>
             <p>{post.description}</p>
             <Link href={`/post/${post.slug}#keep-reading`}>
-              continuar lendo...
+              {post.language === "pt-BR"
+                ? "continuar lendo..."
+                : "keep reading..."}
             </Link>
           </section>
         ))}
       </main>
 
-      <footer className={styles.footer}>
-        <p>Copyright &copy; new Date().getFullYear() João Vitor Veras </p>
-      </footer>
+      <Footer />
     </div>
   );
 };
@@ -60,6 +78,7 @@ export const getStaticProps: GetStaticProps = async () => {
           description
           date
           slug
+          language
         }
       }
     `,
