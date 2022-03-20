@@ -11,9 +11,16 @@ class BlogDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&Zen+Antique+Soft&family=IBM+Plex+Mono:wght@400;600&display=swap"
             rel="stylesheet"
           />
+
+          {/* github pages domain */}
           <meta
             name="google-site-verification"
             content="BXyBgJEABD-lS0WS6u07BLfhlhHI8sT9TtYOH-VtkYs"
+          />
+          {/* is-a.dev domain */}
+          <meta
+            name="google-site-verification"
+            content="v91Ks9t_Nh0XGmwV8GKa5bH-96U4ZKw23VpZajlhi6Y"
           />
         </Head>
         <body>
