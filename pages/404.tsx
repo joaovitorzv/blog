@@ -7,12 +7,12 @@ function Custom404() {
   return (
     <div className="container">
       <Head>
-        <title>@joaovitorzv • 404 Not Found</title>
+        <title>Well that&apos;s an 404 error</title>
       </Head>
       <Header />
       <main className={NotFoundStyles.content}>
         <h2>404</h2>
-        <p>Deculpe, não encontrei nada aqui!</p>
+        <p>Sorry, this page is missing.</p>
       </main>
     </div>
   );

@@ -11,6 +11,7 @@ class BlogDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&Zen+Antique+Soft&family=IBM+Plex+Mono:wght@400;600&display=swap"
             rel="stylesheet"
           />
+          <link rel="icon" href="/assets/blog-icon.ico" />
 
           {/* github pages domain */}
           <meta

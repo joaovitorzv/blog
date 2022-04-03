@@ -42,7 +42,7 @@ const Home = ({ posts }: Props) => {
   return (
     <div className="container">
       <Head>
-        <title>@joaovitorzv • blog</title>
+        <title>The coolest title</title>
         <meta name="description" content="My place on internet" />
       </Head>
       <Header />

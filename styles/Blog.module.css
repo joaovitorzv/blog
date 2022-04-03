@@ -6,7 +6,7 @@
 }
 
 .post {
-  padding: 1rem 0 .5rem 0;
+  padding: 1rem 0 0.5rem 0;
 }
 
 .postTitle {
@@ -15,7 +15,7 @@
   color: var(--theme-text);
   font-family: var(--font-mono);
   font-weight: bold;
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .post > a:hover {
@@ -31,17 +31,7 @@
   font-size: 18px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;  
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: .5rem;
-}
-
-.footer {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  color: var(--theme-text-light);
+  margin-bottom: 0.5rem;
 }
