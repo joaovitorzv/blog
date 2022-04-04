@@ -11,8 +11,7 @@ import "prismjs/components/prism-python";
 import "prismjs/themes/prism.css";
 import { ParsedUrlQuery } from "querystring";
 import React, { useEffect } from "react";
-import Footer from "../../components/footer";
-import Header from "../../components/header";
+import Layout from "../../components/layout";
 import client from "../../graphql-client";
 import { formatDate } from "../../utils";
 import MyLoader from "../../utils/image-loader";
@@ -53,7 +52,7 @@ const Post: NextPage<Props> = ({ post }) => {
   }, []);
 
   return (
-    <>
+    <Layout>
       <Head>
         <title>{post.title}</title>
         <meta name="author" content="https://github.com/joaovitorzv" />
@@ -84,78 +83,72 @@ const Post: NextPage<Props> = ({ post }) => {
           ],
         }}
       />
-      <main className="container">
-        <Header />
-        <section className={PostStyles.postHeader}>
-          <div className={PostStyles.postCover}>
-            <Image
-              loader={MyLoader}
-              src={post.coverImage.url}
-              width={post.coverImage.width}
-              height={post.coverImage.height}
-              layout="responsive"
-              alt="peak of ice mountain"
-            />
-          </div>
-          <h2>{post.title}</h2>
-          <span>{formatDate(post.date, post.language)}</span>
-        </section>
-        <article id="keep-reading" className={PostStyles.content}>
-          <RichText
-            content={post.content.raw}
-            renderers={{
-              bold: ({ children }) => <b className="bold">{children}</b>,
-              li: ({ children }) => <li className="li">{children}</li>,
-              img: ({ src, width, height, altText }) => {
-                return (
-                  <div className="img">
-                    <Image
-                      src={src as string}
-                      alt={altText}
-                      loader={MyLoader}
-                      height={height}
-                      width={width}
-                      layout="intrinsic"
-                    />
-                  </div>
-                );
-              },
-              code: ({ children }) => (
-                <code className="inlineHighlight">{children}</code>
-              ),
-              code_block: ({ children }) => {
-                const codeblock = children as CodeBlock;
-
-                const extractedLang = /(?<=\$)(.*?)(?=\$)/.exec(
-                  codeblock.props.content[0].text || ""
-                );
-                const lang = extractedLang
-                  ? "language-" + extractedLang[0]
-                  : "none";
-
-                const codeblockWithoutLangIdentifier =
-                  codeblock.props.content[0].text.replace(/\$.*?\$\n/, "");
-
-                return (
-                  <pre className="blockHighlight" style={{ fontSize: "14px" }}>
-                    <code className={lang}>
-                      {codeblockWithoutLangIdentifier}
-                    </code>
-                  </pre>
-                );
-              },
-              blockquote: ({ children }) => (
-                <blockquote className="quote">{children}</blockquote>
-              ),
-            }}
+      <section className={PostStyles.postHeader}>
+        <div className={PostStyles.postCover}>
+          <Image
+            loader={MyLoader}
+            src={post.coverImage.url}
+            width={post.coverImage.width}
+            height={post.coverImage.height}
+            layout="responsive"
+            alt="peak of ice mountain"
           />
-        </article>
-        <div className={PostStyles.postFooter}>
-          <Link href="/">{post.language === "pt-BR" ? "Voltar" : "Back"}</Link>
         </div>
-      </main>
-      <Footer />
-    </>
+        <h2>{post.title}</h2>
+        <span>{formatDate(post.date, post.language)}</span>
+      </section>
+      <article id="keep-reading" className={PostStyles.content}>
+        <RichText
+          content={post.content.raw}
+          renderers={{
+            bold: ({ children }) => <b className="bold">{children}</b>,
+            li: ({ children }) => <li className="li">{children}</li>,
+            img: ({ src, width, height, altText }) => {
+              return (
+                <div className="img">
+                  <Image
+                    src={src as string}
+                    alt={altText}
+                    loader={MyLoader}
+                    height={height}
+                    width={width}
+                    layout="intrinsic"
+                  />
+                </div>
+              );
+            },
+            code: ({ children }) => (
+              <code className="inlineHighlight">{children}</code>
+            ),
+            code_block: ({ children }) => {
+              const codeblock = children as CodeBlock;
+
+              const extractedLang = /(?<=\$)(.*?)(?=\$)/.exec(
+                codeblock.props.content[0].text || ""
+              );
+              const lang = extractedLang
+                ? "language-" + extractedLang[0]
+                : "none";
+
+              const codeblockWithoutLangIdentifier =
+                codeblock.props.content[0].text.replace(/\$.*?\$\n/, "");
+
+              return (
+                <pre className="blockHighlight" style={{ fontSize: "14px" }}>
+                  <code className={lang}>{codeblockWithoutLangIdentifier}</code>
+                </pre>
+              );
+            },
+            blockquote: ({ children }) => (
+              <blockquote className="quote">{children}</blockquote>
+            ),
+          }}
+        />
+      </article>
+      <div className={PostStyles.postFooter}>
+        <Link href="/">{post.language === "pt-BR" ? "Voltar" : "Back"}</Link>
+      </div>
+    </Layout>
   );
 };
 

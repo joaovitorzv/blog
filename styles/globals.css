@@ -22,10 +22,11 @@
   --color-purple: #882de7;
   --color-red: #ff1639;
   --color-yellow: #ffbe2d;
+
+  --reading-width: 768px;
 }
 
 :root {
-  color-scheme: light;
   --theme-accent: var(--color-purple);
   --theme-accent-rgb: 136, 45, 231;
   --theme-accent-opacity: 0.05;
@@ -39,13 +40,6 @@
   --theme-code-inline-bg: var(--color-gray-100);
   --theme-code-text: var(--color-gray-100);
   --theme-code-bg: var(--color-gray-700);
-}
-
-.container {
-  min-height: 100vh;
-  max-width: 730px;
-  margin: 0 auto;
-  padding: 0 0.5rem;
 }
 
 * {

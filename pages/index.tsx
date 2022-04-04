@@ -9,6 +9,7 @@ import client from "../graphql-client";
 import styles from "../styles/Blog.module.css";
 import { formatDate } from "../utils";
 import { PostsLangFilterContext } from "../hooks/FilterContext";
+import Layout from "../components/layout";
 
 type Post = {
   id: string;
@@ -40,12 +41,14 @@ const Home = ({ posts }: Props) => {
   }, [selectedLangFilter, posts]);
 
   return (
-    <div className="container">
+    <Layout>
       <Head>
-        <title>The coolest title</title>
-        <meta name="description" content="My place on internet" />
+        <title>The coolest blog title</title>
+        <meta
+          name="description"
+          content="Where I share my thoughts and write about tech."
+        />
       </Head>
-      <Header />
       <main className={styles.main}>
         {postsFiltered.map((post: Post) => (
           <section key={post.title} className={styles.post}>
@@ -62,9 +65,7 @@ const Home = ({ posts }: Props) => {
           </section>
         ))}
       </main>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

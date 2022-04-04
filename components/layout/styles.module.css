@@ -1,0 +1,20 @@
+.container {
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+}
+
+.pageContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.page {
+  width: var(--reading-width);
+}
+
+@media screen and (max-width: 768px) {
+  .page {
+    width: 100%;
+  }
+}
