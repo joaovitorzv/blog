@@ -2,8 +2,8 @@
   --font-sans: "Source Serif Pro", serif;
   --font-mono: "Zen Antique Soft", serif;
 
-  --color-white: #fff;
-  --color--black: #141414;
+  --color-white: #141414;
+  --color--black: #fff ;
 
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
@@ -16,8 +16,8 @@
   --color-gray-800: #1f2937;
   --color-gray-900: #111827;
 
-  --color-blue: #3894ff;
-  --color-green: #17c083;
+  --color-blue: #93fbff;
+  --color-green: #45e6ab;
   --color-orange: #ff5d01;
   --color-purple: #882de7;
   --color-red: #ff1639;
@@ -27,12 +27,12 @@
 }
 
 :root {
-  --theme-accent: var(--color-purple);
+  --theme-accent: var(--color-green);
   --theme-accent-rgb: 136, 45, 231;
   --theme-accent-opacity: 0.05;
   --theme-divider: var(--color-gray-100);
-  --theme-text: var(--color-gray-800);
-  --theme-text-light: var(--color-gray-600);
+  --theme-text: var(--color-gray-100);
+  --theme-text-light: var(--color-gray-300);
   --theme-text-lighter: var(--color-gray-400);
   --theme-bg: var(--color-white);
   --theme-bg-offset: var(--color-gray-100);
@@ -48,6 +48,8 @@
 
 html,
 body {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
   padding: 0;
   margin: 0;
   font-family: var(--font-sans);
@@ -57,6 +59,9 @@ body {
 a {
   color: var(--theme-accent);
   cursor: pointer;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 14px;
+  text-decoration: none;
 }
 
 a:hover {
@@ -90,7 +95,7 @@ span {
 
 .inlineHighlight {
   color: var(--color-blue);
-  background-color: var(--color-gray-100);
+  background-color: var(--color-gray-700);
   padding: 2px 8px;
   border-radius: 4px;
 
@@ -100,7 +105,7 @@ span {
 
 .blockHighlight {
   padding: 12px;
-  background-color: var(--color-gray-100);
+  background-color: var(--color-gray-700);
   border-radius: 4px;
 
   font-size: 16px !important;

@@ -8,7 +8,7 @@ import Link from "next/link";
 import Prism from "prismjs";
 import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-python";
-import "prismjs/themes/prism.css";
+import "prism-themes/themes/prism-one-dark.css";
 import { ParsedUrlQuery } from "querystring";
 import React, { useEffect } from "react";
 import Layout from "../../components/layout";

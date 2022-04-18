@@ -59,8 +59,8 @@ const Home = ({ posts }: Props) => {
             <p>{post.description}</p>
             <Link href={`/post/${post.slug}#keep-reading`}>
               {post.language === "pt-BR"
-                ? "continuar lendo..."
-                : "keep reading..."}
+                ? "Continuar lendo..."
+                : "Keep reading..."}
             </Link>
           </section>
         ))}
