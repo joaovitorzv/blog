@@ -94,7 +94,11 @@ const Header = () => {
                 <select
                   name="langs"
                   defaultValue={selectedLangFilter}
-                  onChange={(e) => changeLangFilter(e.target.value)}
+                  onChange={(e) => {
+                    changeLangFilter(e.target.value);
+                    document.documentElement.lang =
+                      e.target.value === "all" ? "en" : e.target.value;
+                  }}
                 >
                   <option value="all">All languages</option>
                   <option value="en-US">English</option>
