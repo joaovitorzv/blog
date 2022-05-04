@@ -3,8 +3,6 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
-import Footer from "../components/footer";
-import Header from "../components/header";
 import client from "../graphql-client";
 import styles from "../styles/Blog.module.css";
 import { formatDate } from "../utils";
