@@ -13,7 +13,7 @@
     "@graphcms/rich-text-react-renderer": "^0.3.2",
     "@types/prismjs": "^1.16.6",
     "graphql": "^15.6.1",
-    "next": "11.1.2",
+    "next": "12.1.6",
     "next-seo": "^4.28.1",
     "prism-themes": "^1.9.0",
     "prismjs": "^1.25.0",
