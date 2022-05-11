@@ -1,14 +1,32 @@
-.postHeader > h2 {
-  margin-bottom: 0;
-  font-family: var(--font-mono);
-  font-size: 32px;
-}
-
 .postCover {
   width: 100%;
+  height: 400px;
+  position: relative;
 
   margin-top: 1.5rem;
   border-bottom: 4px dashed var(--theme-accent);
+}
+
+.titleContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2em;
+  padding-top: 0;
+  z-index: 5;
+  background: rgb(0,0,0);
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5914740896358543) 100%);
+}
+
+.titleContainer > h2 {
+  margin-bottom: 0;
+  font-family: var(--font-mono);
+  font-size: 48px;
+}
+
+.titleContainer > span {
+  color: var(--theme-accent);
 }
 
 .content {
@@ -18,4 +36,15 @@
 .postFooter {
   padding-top: 20px;
   border-top: 1px dashed var(--theme-accent);
+}
+
+
+@media screen and (max-width: 768px) { 
+  .postCover {
+    height: 240px;
+  }
+
+  .titleContainer > h2 {
+    font-size: 32px;
+  }
 }

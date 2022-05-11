@@ -90,12 +90,15 @@ const Post: NextPage<Props> = ({ post }) => {
             src={post.coverImage.url}
             width={post.coverImage.width}
             height={post.coverImage.height}
-            layout="responsive"
+            layout="fill"
+            objectFit="cover"
             alt="peak of ice mountain"
           />
+          <header className={PostStyles.titleContainer}>
+            <h2>{post.title}</h2>
+            <span>{formatDate(post.date, post.language)}</span>
+          </header>
         </div>
-        <h2>{post.title}</h2>
-        <span>{formatDate(post.date, post.language)}</span>
       </section>
       <article id="keep-reading" className={PostStyles.content}>
         <RichText
