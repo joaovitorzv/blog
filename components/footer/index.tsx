@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <p>
-        &copy; <span>new Date().getFullYear() </span> by João Vitor Veras O.
+        &copy; <span>&#123;current_year&#125; </span> João Vitor V. O.
       </p>
     </footer>
   );
