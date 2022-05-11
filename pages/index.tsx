@@ -39,31 +39,50 @@ const Home = ({ posts }: Props) => {
   }, [selectedLangFilter, posts]);
 
   return (
-    <Layout>
-      <Head>
-        <title>The coolest blog title</title>
-        <meta
-          name="description"
-          content="Where I share my thoughts and write about tech."
-        />
-      </Head>
-      <main className={styles.main}>
-        {postsFiltered.map((post: Post) => (
-          <section key={post.title} className={styles.post}>
-            <Link href={`/post/${post.slug}`}>
-              <a className={styles.postTitle}>{post.title}</a>
-            </Link>
-            <span>{formatDate(post.date, post.language)}</span>
-            <p>{post.description}</p>
-            <Link href={`/post/${post.slug}#keep-reading`}>
-              {post.language === "pt-BR"
-                ? "Continuar lendo..."
-                : "Keep reading..."}
-            </Link>
-          </section>
-        ))}
-      </main>
-    </Layout>
+    <PostsLangFilterContext.Consumer>
+      {({ selectedLangFilter, changeLangFilter }) => (
+        <Layout>
+          <Head>
+            <title>The coolest blog title</title>
+            <meta
+              name="description"
+              content="Where I share my thoughts and write about tech."
+            />
+          </Head>
+          <div className={styles.langFilterContainer}>
+            <select
+              name="langs"
+              defaultValue={selectedLangFilter}
+              onChange={(e) => {
+                changeLangFilter(e.target.value);
+                document.documentElement.lang =
+                  e.target.value === "all" ? "en" : e.target.value;
+              }}
+            >
+              <option value="all">All languages</option>
+              <option value="en-US">English</option>
+              <option value="pt-BR">Português</option>
+            </select>
+          </div>
+          <main className={styles.main}>
+            {postsFiltered.map((post: Post) => (
+              <section key={post.title} className={styles.post}>
+                <Link href={`/post/${post.slug}`}>
+                  <a className={styles.postTitle}>{post.title}</a>
+                </Link>
+                <span>{formatDate(post.date, post.language)}</span>
+                <p>{post.description}</p>
+                <Link href={`/post/${post.slug}#keep-reading`}>
+                  {post.language === "pt-BR"
+                    ? "Continuar lendo..."
+                    : "Keep reading..."}
+                </Link>
+              </section>
+            ))}
+          </main>
+        </Layout>
+      )}
+    </PostsLangFilterContext.Consumer>
   );
 };
 

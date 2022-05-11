@@ -1,3 +1,8 @@
+.langFilterContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .main {
   width: 100%;
   display: flex;
