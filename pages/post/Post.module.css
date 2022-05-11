@@ -14,7 +14,7 @@
   width: 100%;
   padding: 2em;
   padding-top: 0;
-  z-index: 5;
+  z-index: 1;
   background: rgb(0,0,0);
   background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5914740896358543) 100%);
 }
