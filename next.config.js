@@ -1,8 +1,13 @@
+const withMDX = require("@next/mdx")();
+
 /** @type {import('next').NextConfig} */
-module.exports = {
+const config = {
+  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   reactStrictMode: true,
-  images: {
-    loader: 'custom',
-    domains: ['media.graphcms.com'],
-  },
+  // images: {
+  //   loader: "custom",
+  //   domains: ["media.graphcms.com"],
+  // },
 };
+
+module.exports = withMDX(config);

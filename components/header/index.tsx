@@ -32,7 +32,7 @@ const Header = () => {
         <div className={styles.navContent}>
           <div className={styles.links}>
             <Link href="/">
-              <a>Home</a>
+              Home
             </Link>
           </div>
           <div className={styles.links}>

@@ -67,12 +67,12 @@ const Home = ({ posts }: Props) => {
           <main className={styles.main}>
             {postsFiltered.map((post: Post) => (
               <section key={post.title} className={styles.post}>
-                <Link href={`/post/${post.slug}`}>
-                  <a className={styles.postTitle}>{post.title}</a>
+                <Link href={`/post/${post.slug}`} className={styles.postTitle}>
+                  {post.title}
                 </Link>
                 <span>{formatDate(post.date, post.language)}</span>
                 <p>{post.description}</p>
-                <Link href={`/post/${post.slug}#keep-reading`}>
+                <Link href={`/post/${post.slug}#keep-reading`} legacyBehavior>
                   {post.language === "pt-BR"
                     ? "Continuar lendo..."
                     : "Keep reading..."}
@@ -87,23 +87,23 @@ const Home = ({ posts }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await client.query({
-    query: gql`
-      query BlogPosts {
-        posts(orderBy: createdAt_DESC) {
-          id
-          title
-          description
-          date
-          slug
-          language
-        }
-      }
-    `,
-  });
+  // const { data } = await client.query({
+  //   query: gql`
+  //     query BlogPosts {
+  //       posts(orderBy: createdAt_DESC) {
+  //         id
+  //         title
+  //         description
+  //         date
+  //         slug
+  //         language
+  //       }
+  //     }
+  //   `,
+  // });
 
   return {
-    props: data,
+    props: { posts: [] },
   };
 };
 

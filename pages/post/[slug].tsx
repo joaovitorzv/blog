@@ -149,7 +149,7 @@ const Post: NextPage<Props> = ({ post }) => {
         />
       </article>
       <div className={PostStyles.postFooter}>
-        <Link href="/">{post.language === "pt-BR" ? "Voltar" : "Back"}</Link>
+        <Link href="/" legacyBehavior>{post.language === "pt-BR" ? "Voltar" : "Back"}</Link>
       </div>
     </Layout>
   );
