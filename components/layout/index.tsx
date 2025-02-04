@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import Post from "../../pages/post/[slug]";
+// import Post from "../../pages/post/[slug]";
 import { formatDate } from "../../utils";
 import Footer from "../footer";
 import Header from "../header";

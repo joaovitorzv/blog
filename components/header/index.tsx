@@ -24,16 +24,18 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <h1>
-          {"() =>  "}
           <span className={styles.hideLinksBtn}>@joaovitorzv</span> blog.
         </h1>
       </div>
       <nav id="navigation" className={pinned ? styles.pinnedNav : ""}>
         <div className={styles.navContent}>
-          <div className={styles.links}>
-            <Link href="/">
-              Home
-            </Link>
+          <div className={styles.horizontal}>
+            <div className={styles.links}>
+              <Link href="/">Home</Link>
+            </div>
+            <div className={styles.links}>
+              <Link href="/about">About</Link>
+            </div>
           </div>
           <div className={styles.links}>
             <a

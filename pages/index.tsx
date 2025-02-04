@@ -1,13 +1,13 @@
-import { gql } from "@apollo/client";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
-import client from "../graphql-client";
 import styles from "../styles/Blog.module.css";
 import { formatDate } from "../utils";
 import { PostsLangFilterContext } from "../hooks/FilterContext";
 import Layout from "../components/layout";
+import { listPostsMeta } from "../services/posts";
+import { ovo } from "../fonts";
 
 type Post = {
   id: string;
@@ -43,7 +43,7 @@ const Home = ({ posts }: Props) => {
       {({ selectedLangFilter, changeLangFilter }) => (
         <Layout>
           <Head>
-            <title>The coolest blog title</title>
+            <title>joaovitorzv · blog</title>
             <meta
               name="description"
               content="Where I share my thoughts and write about tech."
@@ -64,19 +64,23 @@ const Home = ({ posts }: Props) => {
               <option value="pt-BR">Português</option>
             </select>
           </div>
-          <main className={styles.main}>
+          <main className={`${styles.main} ${ovo.variable}`}>
             {postsFiltered.map((post: Post) => (
               <section key={post.title} className={styles.post}>
-                <Link href={`/post/${post.slug}`} className={styles.postTitle}>
+                <Link href={`/z/${post.slug}`} className={styles.postTitle}>
                   {post.title}
                 </Link>
-                <span>{formatDate(post.date, post.language)}</span>
-                <p>{post.description}</p>
-                <Link href={`/post/${post.slug}#keep-reading`} legacyBehavior>
-                  {post.language === "pt-BR"
-                    ? "Continuar lendo..."
-                    : "Keep reading..."}
-                </Link>
+                <div className={styles.blogUtils}>
+                  <span className={styles.date}>
+                    {formatDate(post.date, post.language)}
+                  </span>
+                  {/* <p>{post.description}</p> */}
+                  {/* <Link href={`/z/${post.slug}#keep-reading`} legacyBehavior>
+                    {post.language === "pt-BR"
+                      ? "Continuar lendo..."
+                      : "Keep reading..."}
+                  </Link> */}
+                </div>
               </section>
             ))}
           </main>
@@ -87,23 +91,15 @@ const Home = ({ posts }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  // const { data } = await client.query({
-  //   query: gql`
-  //     query BlogPosts {
-  //       posts(orderBy: createdAt_DESC) {
-  //         id
-  //         title
-  //         description
-  //         date
-  //         slug
-  //         language
-  //       }
-  //     }
-  //   `,
-  // });
+  const posts = listPostsMeta();
+
+  const postsSorted = posts.sort((a, b) => {
+    if (!a?.date || !b?.date) return 0;
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
 
   return {
-    props: { posts: [] },
+    props: { posts: postsSorted },
   };
 };
 

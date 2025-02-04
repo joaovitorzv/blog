@@ -1,0 +1,83 @@
+---
+id: 1
+title: How I reverse engineered my TV to control it from terminal
+description: Alright i can edit this thing and the description will be edited
+date: 07-21-2024
+language: en
+draft: true
+---
+
+import Header from "../components/header/index.tsx";
+import MdxLayout from "../components/post/layout.tsx";
+
+export const metadata = {
+  author: "João Vitor Veras",
+  date: "20 of July 2024",
+  title: "How I reversed engineered my TV to control it from terminal",
+};
+
+# How I reverse engineered my TV to control it from terminal
+
+One of the things I like the most as a programmer is reverse engineering stuff, I feel challenged and at the end of the day learn a lot by doing it,
+on this post I will show how I figured out how the app from my Roku TV connects to it via my local network, how the commands between TV and App is handled
+and how I made a small script to control it from the comfort of my terminal.
+
+### First step: Dismantling the app
+
+The first thing i needed was to understand how the app creates a connection with the TV. To do that I started by looking at the network requests the app makes,
+to have access to those requests I needed to proxy all request happening on my phone to my laptop and used a really useful tool called mitmproxy.
+
+```bash
+mitmproxy --mode reverse:https://api.roku.com --showhost
+```
+
+to setup the proxy we need to:
+
+1. Install mitmproxy on your laptop
+2. Connect your phone to the same network as your laptop
+3. Set the proxy on your phone to point to your laptop
+4. Start mitmproxy with the command above
+
+Checkout my React component:
+
+```js
+while (++index < list.length) {
+  const value = String(list[index]);
+
+  if (value === "no-highlight" || value === "nohighlight") {
+    return false;
+  }
+
+  if (!name && value.slice(0, 5) === "lang-") {
+    name = value.slice(5);
+  }
+
+  if (!name && value.slice(0, 9) === "language-") {
+    name = value.slice(9);
+  }
+}
+```
+
+## Footnote
+
+A note[^1]
+
+[^1]: Big note.
+
+## Strikethrough
+
+~one~ or ~~two~~ tildes.
+
+## Table
+
+| a   | b   |   c |  d  |
+| --- | :-- | --: | :-: |
+
+## Tasklist
+
+- [ ] to do
+- [x] done
+
+```
+
+```

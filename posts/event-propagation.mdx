@@ -1,0 +1,83 @@
+---
+id: 1
+title: Event Propagation
+description: HTML Event Propagation
+date: 03-12-2022
+language: en
+---
+
+import Header from "../components/header";
+import MdxLayout from "../components/post/layout.tsx";
+
+# Event Propagation
+
+When you do a google search various events have been triggered, from you writing what you are looking for
+to clicking the best result of the search, those interactions can be called events.
+
+But they not only comes from a user interaction they also can be called programmatically, using the `dispatchEvent()`
+or calling the method `click()` of an element e.g `HTMLElement.click()`
+
+different from the ones triggered by the browser via user interaction, events triggered this way is
+called "synthetic events".
+
+# Event Bubbling and Capturing
+
+```html
+<section onClick="console.log('handle section')">
+  <div onClick="console.log('handle div')">
+    <p onClick="console.log('handle p')">hey i'm a child</p>
+  </div>
+</section>
+```
+
+On the example above we have 3 nested elements, with it's own handlers in this case the `onClick`
+
+if I click on the child element `<p />` the event of clicking will trigger its `onClick` handler
+but will also bubble up to it's parent elements and trigger their own handlers, that makes sense
+because if we look at the content rendered, when we click on anything inside the `<section />` we
+are somehow clicking on the `<section />` itself.
+
+Now if we go a little back in time, microsoft and netscape came into different conclusions:
+
+1. Microsoft said that the innermost element should be triggered first then the outer ones, that's
+   called **Event Bubbling**
+
+2. Netscape said that the outermost element should be triggered first and then the inner ones, that's
+   called **Event Capturing**
+
+Nowadays all modern browsers support both and the only way to change whether Bubble or Capture is using a
+listener
+
+```js
+⁠myElement.addEventListener("click", () => {
+  ⁠/* block to execute when triggered */
+⁠}, true) // Event Capture
+```
+
+```js
+⁠myElement.addEventListener("click", () => {
+  ⁠/* block to execute when triggered */
+⁠}, false) // Event Bubble *default*
+```
+
+An interesting thing here is that the propagation will always happen, so when working on a very complex DOM
+tree the bubbling may impact negatively on performance even if there is no other handler found while "bubbling",
+thus we may end having to disable the propagation using the `stopPropagation()` method
+
+```js
+⁠myElement.addEventListener("click", (e) => {
+⁠  e.stopPropagation()
+⁠})
+```
+
+# Conclusion
+
+Event propagation order can interfere on which order your handlers is being triggered. By default de event
+will bubble up from the innermost to the outermost element, if that's not a desired behavior we can change
+and use Capture passing `true` as the third parameter of an event listener, also if needed we can disable
+the propagation with the `event.stopPropagation()` method.
+
+# References
+
+- [MDN Event Reference](https://developer.mozilla.org/en-US/docs/Web/Events)
+- [Quirksmode Events Order](https://www.quirksmode.org/js/events_order.html)

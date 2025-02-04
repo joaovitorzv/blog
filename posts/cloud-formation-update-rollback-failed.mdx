@@ -1,0 +1,83 @@
+---
+id: 4
+title: Recovering a Cloud Formation Stack from UPDATE_ROLLBACK_FAILED state
+description: My experience recovering a Cloud Formation Stack from a bad state I got into
+date: 10-02-2024
+language: en
+---
+
+import Header from "../components/header";
+import MdxLayout from "../components/post/layout.tsx";
+import image from "../public/assets/cloud-formation-error-terminal.png";
+
+# How to recover a Cloud Formation Stack from UPDATE_ROLLBACK_FAILED state
+
+Recently I was working on a feature where I needed a lambda function with a custom concurrency limit.
+
+I thought I could just add the `"ReservedConcurrentExecutions"` property to the Cloud Formation Template run the Amplify CLI
+deploy and call it a day, but... things didn’t go as expected and I got some errors:
+
+```shell
+LambdaFunction       AWS::Lambda::Function       UPDATE_FAILED        Wed Oct 02 2024 17:40:03…
+
+🛑 The following resources failed to deploy:
+Resource Name: LambdaFunction (AWS::Lambda::Function)
+Event Type: update
+Reason: Resource handler returned message: "User: arn:aws:sts::***:assumed-role/us-east-1_***/amplifyadmin is not authorized to perform: lambda:PutFunctionConcurrency on resource: arn:aws:lambda:us-east-1:***:function:***-staging because no identity-based policy allows the lambda:PutFunctionConcurrency action (Service: Lambda, Status Code: 403, Request ID: ***)" (RequestToken: ***, HandlerErrorCode: AccessDenied)
+URL: *redacted*
+
+Resource Name: LambdaFunction (AWS::Lambda::Function)
+Event Type: update
+Reason: Resource handler returned message: "User: arn:aws:sts::***:assumed-role/us-east-1_***/amplifyadmin is not authorized to perform: lambda:DeleteFunctionConcurrency on resource: arn:aws:lambda:us-east-1:***:function:***-staging because no identity-based policy allows the lambda:DeleteFunctionConcurrency action (Service: Lambda, Status Code: 403, Request ID: ***)" (RequestToken: ***, HandlerErrorCode: AccessDenied)
+URL: *redacted*
+
+🛑 Resource is not in the state stackUpdateComplete
+```
+
+two errors happened, first it failed to execute the `PutFunctionConcurrency` because the `amplifyadmin` role used by Amplify CLI
+does not have this policy by default and I was not aware of it
+
+then it tried to rollback and for some reason executed `DeleteFunctionConcurrency` even though it failed to update it in the first
+place, this got the Cloud Formation Stack in the `UPDATE_ROLLBACK_FAILED` state where nothing could be done through the CLI
+anymore, things must be fixed manually through AWS Console.
+
+# How I got it fixed
+
+the "manual" fix in this case was simple, I went to the IAM Console searched for the amplifyadmin role and asssigned the missing
+policies to it
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:DeleteFunctionConcurrency",
+        "lambda:PutFunctionConcurrency"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+and then I had to re-trigger the rollback of the stack, to get this done I went to the Cloud Formation Console selected the stack
+failling with UPDATE_ROLLBACK_FAILED, on the “Stack Actions” menu is listed the option “Continue Update Rollback” which is
+what we want
+
+![CloudFormation Stack Actions Menu](/assets/cfn-stack-menu.png)
+
+the "Continue Update Rollback" give us the option to skip the update of failing nested stacks (this means I could skip the failed lambda
+stack that caused this problem) it also displays a super scary message that states if we skip the rollback of a nested stack and don't
+fix it to be in sync with the parent stack later our whole stack might become unrecoverable.
+
+![CloudFormation skip stack warning](/assets/cfn-skip-warn.png)
+
+happily we already know what caused the issue and fixed it by assigning the policies to the CLI IAM role, we can now re-trigger the rollback without skipping the nested stack.
+
+at this point the stack was successfully rolled back and I could use the Amplify CLI to deploy the changes again.
+
+a fun thing to note is that after losing some time on that I actually ended up implementing a pessimist-locking solution for the feature
+I was working instead of using a custom lambda concurrency, but still learned a lot.

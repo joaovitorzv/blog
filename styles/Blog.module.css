@@ -8,6 +8,20 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-family: var(--font-ovo);
+}
+
+.date {
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: small;
+  margin-bottom: 4px;
+}
+
+.blogUtils {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
 }
 
 .post {
@@ -16,11 +30,15 @@
 
 .postTitle {
   display: block;
-  font-size: 28px;
-  color: var(--theme-text);
-  font-family: var(--font-mono);
-  font-weight: bold;
+  font-size: 24px;
+  color: var(--color-gray-200);
+  font-family: var(--font-ovo);
+  font-weight: 400;
   text-decoration: none;
+}
+
+.postTitle:hover {
+  color: var(--theme-text);
 }
 
 .post > a:hover {
@@ -39,5 +57,5 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 0.5rem;
-  opacity: .8;
+  opacity: 0.8;
 }
